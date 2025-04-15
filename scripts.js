@@ -98,7 +98,7 @@ let playGame = function(playerOne, playerTwo, index, game){
         game.gameBoard[index] = pick;
         limit--;
 
-        // Checking whether won
+        // Checking whether someone won
         if(game.thresholdBroke(pick)){
             winningPlayer = game.checkingForMatch(pick);
             if(winningPlayer) showWinner(pick, playerOne, playerTwo);
@@ -111,6 +111,7 @@ let playGame = function(playerOne, playerTwo, index, game){
 function showWinner(winnerPick, playerOne, playerTwo){
     let winnerDialog = document.querySelector('.winnerBoard');
     let winnerMessage = document.querySelector('.winnerBoard p')
+    let closeButton = document.querySelector('.winnerBoard button')
     let winner;
     winner = playerOne.getPick() == winnerPick ? playerOne.getName() : playerTwo.getName();
         if(limit == 0){
@@ -120,6 +121,10 @@ function showWinner(winnerPick, playerOne, playerTwo){
             winnerMessage.innerText = `${winner} wins!!!`;
         }
         winnerDialog.showModal();
+    closeButton.addEventListener("click", ()=>{
+        winnerDialog.close();
+        init();
+    })
 }
 
 function startGame(){
@@ -154,19 +159,19 @@ function startGame(){
 
 }
 
+let init = function(){
+    document.querySelector('.opener').showModal();
+    let startButton = document.querySelector('.opener button');
+    startButton.addEventListener("click", (e)=>{
+        let form = document.querySelector('form');
+        if(!form.checkValidity()) return;
+        console.log('Button pressed');
+        e.preventDefault();
+        startGame();
+    })
+}
 
-document.querySelector('.opener').showModal();
-let startButton = document.querySelector('.opener button');
-startButton.addEventListener("click", (e)=>{
-    let form = document.querySelector('form');
-    if(!form.checkValidity()) return;
-    console.log('Button pressed');
-
-
-
-    e.preventDefault();
-    startGame();
-})
+init();
 
 
 
