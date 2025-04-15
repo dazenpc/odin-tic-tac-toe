@@ -1,6 +1,8 @@
 // Global variables
 let winningPlayer;
 let limit = 9;
+let player1;
+let player2;
 
 // Player constructor
 function Player(name, pick){
@@ -77,17 +79,29 @@ let game = (function(){
 
 // Event function for every click
 let playGame = function(playerOne, playerTwo, index, game){
+    console.log("playgame called")
     if(!winningPlayer & limit > 0){
         let moveFor = playerOne.hasPlayed ? playerTwo : playerOne;
+        let pick = moveFor.pick;
+
+        // setting moves 
+        if(playerOne.pick == pick){
+            playerOne.hasPlayed = true;
+            playerTwo.hasPlayed = false;
+        }
+        else{
+            playerTwo.hasPlayed = true;
+            playerOne.hasPlayed = false;
+        }
 
         // Making the move in the board
-        game.gameBoard[index] = moveFor.pick;
+        game.gameBoard[index] = pick;
         limit--;
 
         // Checking whether won
-        if(game.thresholdBroke(moveFor.pick)){
-            winningPlayer = game.checkingForMatch(moveFor.pick);
-            if(winningPlayer) showWinner(winningPlayer, playerOne, playerTwo);
+        if(game.thresholdBroke(pick)){
+            winningPlayer = game.checkingForMatch(pick);
+            if(winningPlayer) showWinner(pick, playerOne, playerTwo);
         }
         
     }
@@ -96,16 +110,65 @@ let playGame = function(playerOne, playerTwo, index, game){
 
 function showWinner(winnerPick, playerOne, playerTwo){
     let winnerDialog = document.querySelector('.winnerBoard');
-    let winnerMessage = document.querySelector('.winnerBoard.message')
+    let winnerMessage = document.querySelector('.winnerBoard p')
     let winner;
     winner = playerOne.getPick() == winnerPick ? playerOne.getName() : playerTwo.getName();
         if(limit == 0){
             winnerMessage.innerText = "DRAW!!!!";
-            winnerDialog.showModal();
         }
         else{
             winnerMessage.innerText = `${winner} wins!!!`;
-            winnerDialog.showModal();
         }
+        winnerDialog.showModal();
 }
+
+function startGame(){
+    console.log('start game called');
+    let dialogBox = document.querySelector('.opener');
+
+    // get player 1 details
+    let playerOneName = document.querySelector('.opener form input[name="player1Name"]').value;
+    let playerOnePick = document.querySelector('.opener form input[name="player1Pick"]').value;
+
+    // get player 2 details
+    let playerTwoName = document.querySelector('.opener form input[name="player2Name"]').value;
+    let playerTwoPick = document.querySelector('.opener form input[name="player2Pick"]').value;
+
+    // create the objects 
+    player1 = new Player(playerOneName, playerOnePick);
+    player2 = new Player(playerTwoName, playerTwoPick);
+
+    dialogBox.close();
+
+    let playArea = document.querySelector('.playArea');
+    for(let i = 0 ; i < 9; i++){
+        let gameTile = document.createElement("div");
+        gameTile.setAttribute("class", i)
+        playArea.appendChild(gameTile);
+        gameTile.addEventListener("click", ()=>{
+            console.log("made a move");
+            playGame(player1, player2, i, game);
+        })
+    }
+
+
+}
+
+
+document.querySelector('.opener').showModal();
+let startButton = document.querySelector('.opener button');
+startButton.addEventListener("click", (e)=>{
+    let form = document.querySelector('form');
+    if(!form.checkValidity()) return;
+    console.log('Button pressed');
+
+
+
+    e.preventDefault();
+    startGame();
+})
+
+
+
+
 
