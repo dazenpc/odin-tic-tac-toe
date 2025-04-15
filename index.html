@@ -8,6 +8,38 @@
     <script src="scripts.js" defer></script>
 </head>
 <body>
+    <!-- to create two players -->
+     <!-- Change the x and o selection to a button  -->
+    <dialog class="opener">
+        <form action="#">
+            <p>Player 1</p>
+            <label for="name">
+                Name:
+                <input type="text" name="player1Name" id="name" required>
+            </label>
+            <label for="pick">
+                Pick:
+                <input type="text" name="player1Pick" id="pick" required>
+            </label>
+            <p>Player 2</p>
+            <label for="name">
+                Name:
+                <input type="text" name="player2Name" id="name" required>
+            </label>
+            <label for="pick">
+                Pick:
+                <input type="text" name="player2Pick" id="pick" required>
+            </label>
+            <button type="submit">Start Game</button>
+        </form>
+    </dialog>
+
+    <div class="playArea"></div>
+    <dialog class="winnerBoard">
+        <p class="message"></p>
+        <button>OK</button>
+    </dialog>
+    
     
 </body>
 </html>
