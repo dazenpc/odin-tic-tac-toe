@@ -104,20 +104,20 @@ let playGame = function(playerOne, playerTwo, index, game){
             if(winningPlayer) showWinner(pick, playerOne, playerTwo);
         }
         
+        if(limit < 1) showWinner(playerOne, playerTwo);
     }
 
 };
 
-function showWinner(winnerPick, playerOne, playerTwo){
+function showWinner(winnerPick='NOPE', playerOne, playerTwo){
     let winnerDialog = document.querySelector('.winnerBoard');
-    let winnerMessage = document.querySelector('.winnerBoard p')
-    let closeButton = document.querySelector('.winnerBoard button')
-    let winner;
-    winner = playerOne.getPick() == winnerPick ? playerOne.getName() : playerTwo.getName();
-        if(limit == 0){
+    let winnerMessage = document.querySelector('.winnerBoard p');
+    let closeButton = document.querySelector('.winnerBoard button');
+        if(winnerPick == 'NOPE'){
             winnerMessage.innerText = "DRAW!!!!";
         }
         else{
+            let winner = playerOne.getPick() == winnerPick ? playerOne.getName() : playerTwo.getName();
             winnerMessage.innerText = `${winner} wins!!!`;
         }
         winnerDialog.showModal();
@@ -169,6 +169,34 @@ let init = function(){
         e.preventDefault();
         startGame();
     })
+
+    // accessibility for s and o
+    let player1Picks = document.querySelectorAll('input[name="player1Pick"]');
+
+    for(const pick of player1Picks){
+        
+        pick.addEventListener("change",()=>{
+            let p1Pick = pick.value;
+
+            let oppositeValue = p1Pick == "x"? "o":"x";
+            let p2Auto = document.querySelector(`input[name="player2Pick"][value="${oppositeValue}"]`);
+            p2Auto.checked = true;
+        })
+    }
+
+    let player2Picks = document.querySelectorAll('input[name="player2Pick"]');
+
+    player2Picks.forEach(pick => {
+        pick.addEventListener("change",()=>{
+            let p2Pick = pick.value;
+
+            let oppositeValue = p2Pick == "x"? "o":"x";
+            let p1Auto = document.querySelector(`input[name="player1Pick"][value="${oppositeValue}"]`);
+            p1Auto.checked = true;
+        })
+    })
+
+    
 }
 
 init();
@@ -176,4 +204,6 @@ init();
 
 
 
-
+// display the input
+// show whose turn is going on
+// change the x and o functionality to checkbox button

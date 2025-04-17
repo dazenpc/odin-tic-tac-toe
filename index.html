@@ -17,19 +17,26 @@
                 Name:
                 <input type="text" name="player1Name" id="name" required>
             </label>
-            <label for="pick">
-                Pick:
-                <input type="text" name="player1Pick" id="pick" required>
+            Pick:
+            <label for="pick"> X
+                <input type="radio" name="player1Pick" id="pick" value="x">
+            </label>
+            <label for="pick"> O
+                <input type="radio" name="player1Pick" id="pick" value="o">
             </label>
             <p>Player 2</p>
             <label for="name">
                 Name:
                 <input type="text" name="player2Name" id="name" required>
             </label>
-            <label for="pick">
-                Pick:
-                <input type="text" name="player2Pick" id="pick" required>
-            </label>
+        </label>
+        Pick:
+        <label for="pick"> X
+            <input type="radio" name="player2Pick" id="pick" value="x">
+        </label>
+        <label for="pick"> O
+            <input type="radio" name="player2Pick" id="pick" value="o">
+        </label>
             <button type="submit">Start Game</button>
         </form>
     </dialog>
