@@ -8,7 +8,17 @@ body{
 }
 
 .opener{
-    border: 2px dotted blue;
+    border-width: 2px;
+    border-style: groove;
+    border-color: aqua;
+}
+
+.notice{
+    border: 1px solid white;
+    font-weight: bolder;
+    padding-left: 50px;
+    background-color: blue;
+    color: azure;
 }
 
 .opener > form {
