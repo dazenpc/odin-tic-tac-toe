@@ -81,7 +81,7 @@ let game = (function(){
 let playGame = function(playerOne, playerTwo, index, game){
     let gameTile = document.querySelector(`div[class="${index}"]`);
     console.log("playgame called")
-    if(!winningPlayer & limit > 0){
+    if(limit > 0){
         let moveFor = playerOne.hasPlayed ? playerTwo : playerOne;
         let pick = moveFor.pick;
         gameTile.innerText = pick;
@@ -104,13 +104,13 @@ let playGame = function(playerOne, playerTwo, index, game){
             winningPlayer = game.checkingForMatch(pick);
             if(winningPlayer) showWinner(pick, playerOne, playerTwo);
         }
-        
-        if(limit < 1) showWinner(playerOne, playerTwo);
+
+        if(!winningPlayer && limit == 0) showWinner('NOPE',playerOne,playerTwo);
     }
 
 };
 
-function showWinner(winnerPick='NOPE', playerOne, playerTwo){
+function showWinner(winnerPick, playerOne, playerTwo){
     let winnerDialog = document.querySelector('.winnerBoard');
     let winnerMessage = document.querySelector('.winnerBoard p');
     let closeButton = document.querySelector('.winnerBoard button');
