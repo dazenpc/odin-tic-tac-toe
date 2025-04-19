@@ -79,11 +79,12 @@ let game = (function(){
 
 // Event function for every click
 let playGame = function(playerOne, playerTwo, index, game){
+    let gameTile = document.querySelector(`div[class="${index}"]`);
     console.log("playgame called")
     if(!winningPlayer & limit > 0){
         let moveFor = playerOne.hasPlayed ? playerTwo : playerOne;
         let pick = moveFor.pick;
-
+        gameTile.innerText = pick;
         // setting moves 
         if(playerOne.pick == pick){
             playerOne.hasPlayed = true;
@@ -123,6 +124,7 @@ function showWinner(winnerPick='NOPE', playerOne, playerTwo){
         winnerDialog.showModal();
     closeButton.addEventListener("click", ()=>{
         winnerDialog.close();
+        location.reload();
         init();
     })
 }
@@ -133,11 +135,11 @@ function startGame(){
 
     // get player 1 details
     let playerOneName = document.querySelector('.opener form input[name="player1Name"]').value;
-    let playerOnePick = document.querySelector('.opener form input[name="player1Pick"]').value;
+    let playerOnePick = document.querySelector('.opener form input[name="player1Pick"]:checked').value;
 
     // get player 2 details
     let playerTwoName = document.querySelector('.opener form input[name="player2Name"]').value;
-    let playerTwoPick = document.querySelector('.opener form input[name="player2Pick"]').value;
+    let playerTwoPick = document.querySelector('.opener form input[name="player2Pick"]:checked').value;
 
     // create the objects 
     player1 = new Player(playerOneName, playerOnePick);
@@ -149,6 +151,7 @@ function startGame(){
     for(let i = 0 ; i < 9; i++){
         let gameTile = document.createElement("div");
         gameTile.setAttribute("class", i)
+        gameTile.setAttribute("style", "background-color: blue; border: 1px solid white; font-size:8rem; color: white; text-align: center;")
         playArea.appendChild(gameTile);
         gameTile.addEventListener("click", ()=>{
             console.log("made a move");
@@ -170,7 +173,7 @@ let init = function(){
         startGame();
     })
 
-    // accessibility for s and o
+    // accessibility for x and o
     let player1Picks = document.querySelectorAll('input[name="player1Pick"]');
 
     for(const pick of player1Picks){
@@ -201,9 +204,3 @@ let init = function(){
 
 init();
 
-
-
-
-// display the input
-// show whose turn is going on
-// change the x and o functionality to checkbox button
